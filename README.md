@@ -42,3 +42,58 @@ CREATE TABLE retail_sales
 - **Customer Count**: Find out how many unique customers are in the dataset.
 - **Category Count**: Identify all unique product categories in the dataset.
 - **Null Value Check**: Check for any null values in the dataset and delete records with missing data.
+
+
+```sql
+select * from [dbo].[SQL - Retail Sales Analysis_utf ] 
+where transactions_id is null
+	 or
+	 sale_date is null
+	 or 
+	 sale_time is null
+	 or 
+	 customer_id is null
+	 or 
+	 gender is null
+	 or 
+	 age is null
+	 or
+	 category is null
+	 or 
+	 quantiy is null
+	 or 
+	 price_per_unit is null
+	 or 
+	 cogs is null
+	 or 
+	 total_sale is null;
+
+-- Found the Null values in Age, Quantity,Price_per_unit, cogs and total_sale
+
+--Duplicate table will be execute to clean the data and further analysis
+select * into [Retail Sales Analysis] from [dbo].[SQL - Retail Sales Analysis_utf ];
+
+select * from [Retail Sales Analysis];
+
+-- Deal with appopiate value all the null values
+select * from [Retail Sales Analysis] where age is null;
+
+--Age Column--
+update [Retail Sales Analysis]
+set age = (select avg(age) from [Retail Sales Analysis] ) where age is null;
+
+
+--Fill the appropiate value instead of null value
+
+update [Retail Sales Analysis]
+set quantiy=0,
+    price_per_unit=0,
+    cogs=0,
+    total_sale = 0
+where 
+    quantiy is null
+    or price_per_unit is null
+    or cogs is null 
+    or total_sale is null;
+
+```
